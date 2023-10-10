@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "BasePawn.generated.h"
+#include "SGameUnitPawn.generated.h"
 
 class UCapsuleComponent;
 
 UCLASS()
-class TANKATTACK_API ABasePawn : public APawn
+class TANKATTACK_API ASGameUnitPawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	ABasePawn();
+	ASGameUnitPawn();
 
 protected:
 	// Called when the game starts or when spawned
