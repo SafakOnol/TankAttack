@@ -26,13 +26,13 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UCapsuleComponent* CapsuleComponent;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* BaseMesh; // no need for forward declaration since staticmeshcomponents are already included in actor
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* TurretMesh;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	USceneComponent* ProjectileSpawnPoint;
 
 public:	
