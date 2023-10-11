@@ -24,13 +24,6 @@ ASGameUnitPawn::ASGameUnitPawn()
 
 }
 
-// Called when the game starts or when spawned
-void ASGameUnitPawn::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 // Called every frame
 void ASGameUnitPawn::Tick(float DeltaTime)
 {
@@ -38,10 +31,4 @@ void ASGameUnitPawn::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void ASGameUnitPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
 
