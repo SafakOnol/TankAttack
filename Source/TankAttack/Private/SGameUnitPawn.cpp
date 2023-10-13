@@ -3,13 +3,10 @@
 
 #include "SGameUnitPawn.h"
 #include "Components/CapsuleComponent.h"
-
+#include "Kismet/GameplayStatics.h"
 // Sets default values
 ASGameUnitPawn::ASGameUnitPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	RootComponent = CapsuleComponent;
 
@@ -24,11 +21,14 @@ ASGameUnitPawn::ASGameUnitPawn()
 
 }
 
-// Called every frame
-void ASGameUnitPawn::Tick(float DeltaTime)
+void ASGameUnitPawn::RotateTurret(FVector LookAtTarget)
 {
-	Super::Tick(DeltaTime);
+	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation(); // this is a world rotation
+	FRotator LookAtRotation(0.f, ToTarget.Rotation().Yaw, 0.f); // Currently I only want to get Yaw value, so we're setting pitch and roll to 0.
 
+	TurretMesh->SetWorldRotation(
+		FMath::RInterpTo(TurretMesh->GetComponentRotation(),
+		LookAtRotation, UGameplayStatics::GetWorldDeltaSeconds(this),
+		5.f));
 }
-
 

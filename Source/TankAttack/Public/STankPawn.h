@@ -33,7 +33,6 @@ private:
 
 	void Move(float Value);
 	void Turn(float Value);
-	void RotateTurretX(float Value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float Speed = 500.f;
@@ -48,6 +47,9 @@ private:
 	APlayerController* PlayerControllerReference;
 	
 public:
+	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

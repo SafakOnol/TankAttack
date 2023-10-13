@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 ASTankPawn::ASTankPawn()
 {
@@ -19,11 +20,29 @@ ASTankPawn::ASTankPawn()
 // Called when the game starts or when spawned
 void ASTankPawn::BeginPlay()
 {
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+	
 	Super::BeginPlay();
 
 	PlayerControllerReference = Cast<APlayerController>(GetController());
 	// Get Controller is actually a type APlayerController pointer stored in AController pointer,
 	// therefore we can Cast it back to APlayerController, which is our type of pointer (pointers have to reference to same types)
+}
+
+void ASTankPawn::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	// Using APlayerController::GetHitResultUnderCursor to line trace to mouse cursor and getting hit information
+	if(PlayerControllerReference)
+	{
+		// We're passing the FHitResult as reference but not const, because we need to change the information on HitResult with every hit.
+		FHitResult HitResult;
+		PlayerControllerReference->GetHitResultUnderCursor(ECC_Visibility,false, HitResult);
+		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.f, 12, FColor::Red, false, -1.f);
+		RotateTurret(HitResult.ImpactPoint);
+	}
 }
 
 // Called to bind functionality to input
@@ -34,6 +53,8 @@ void ASTankPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASTankPawn::Move);
 
 	PlayerInputComponent->BindAxis("Turn", this, &ASTankPawn::Turn);
+
+	//PlayerInputComponent->BindAxis("RotateTurret", this, ASGameUnitPawn::RotateTurret);
 	
 }
 
@@ -55,10 +76,6 @@ void ASTankPawn::Turn(float Value)
 	AddActorLocalRotation(DeltaRotation, true);
 }
 
-void ASTankPawn::RotateTurretX(float Value)
-{
-	FRotator DeltaRotation = FRotator::ZeroRotator;
-	DeltaRotation.Yaw = Value * TurretTurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalRotation(DeltaRotation, true);
-}
+
+
 
