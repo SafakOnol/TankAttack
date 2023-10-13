@@ -4,20 +4,15 @@
 #include "STowerPawn.h"
 #include "STankPawn.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 void ASTowerPawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if(Tank)
+	if(IsTankInRange())
 	{
-		float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
-
-		if (Distance < FireRange)
-		{
-			RotateTurret(Tank->GetActorLocation());
-		}
-		
+		RotateTurret(Tank->GetActorLocation());
 	}
 	
 }
@@ -28,4 +23,28 @@ void ASTowerPawn::BeginPlay()
 
 	// Call Tank pointer from Tank class
 	Tank = Cast<ASTankPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+
+	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ASTowerPawn::CheckFireCondition, FireRate, true);
 }
+
+void ASTowerPawn::CheckFireCondition()
+{
+	if(IsTankInRange())
+	{
+		Fire();
+	}
+}
+
+bool ASTowerPawn::IsTankInRange()
+{
+	if(Tank)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
+		if (Distance < FireRange)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+

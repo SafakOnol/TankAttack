@@ -4,7 +4,7 @@
 #include "SGameUnitPawn.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "DrawDebugHelpers.h"
+#include "SProjectile.h"
 // Sets default values
 ASGameUnitPawn::ASGameUnitPawn()
 {
@@ -37,6 +37,8 @@ void ASGameUnitPawn::Fire()
 {
 	// Draw Debug sphere
 	FVector ProjectileSpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
-	DrawDebugSphere(GetWorld(), ProjectileSpawnPointLocation, 25.f, 12, FColor::Red, false, 3.f);
+	//DrawDebugSphere(GetWorld(), ProjectileSpawnPointLocation, 25.f, 12, FColor::Red, false, 3.f);
+	FRotator ProjectileRotation = ProjectileSpawnPoint->GetComponentRotation();
+	GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, ProjectileSpawnPointLocation, ProjectileRotation);
 }
 
