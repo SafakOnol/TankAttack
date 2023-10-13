@@ -40,7 +40,7 @@ void ASTankPawn::Tick(float DeltaTime)
 		// We're passing the FHitResult as reference but not const, because we need to change the information on HitResult with every hit.
 		FHitResult HitResult;
 		PlayerControllerReference->GetHitResultUnderCursor(ECC_Visibility,false, HitResult);
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.f, 12, FColor::Red, false, -1.f);
+		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 12, FColor::Blue, false, -1.f);
 		RotateTurret(HitResult.ImpactPoint);
 	}
 }
@@ -54,7 +54,7 @@ void ASTankPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAxis("Turn", this, &ASTankPawn::Turn);
 
-	//PlayerInputComponent->BindAxis("RotateTurret", this, ASGameUnitPawn::RotateTurret);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASTankPawn::Fire);
 	
 }
 
