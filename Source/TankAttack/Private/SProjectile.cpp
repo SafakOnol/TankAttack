@@ -4,6 +4,7 @@
 #include "SProjectile.h"
 
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "opensubdiv/far/error.h"
 
 // Sets default values
 ASProjectile::ASProjectile()
@@ -24,7 +25,18 @@ ASProjectile::ASProjectile()
 void ASProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &ASProjectile::OnHit);
+}
+
+void ASProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("OnHit"));
+	//UE_LOG(LogTemp, TEXT("%s ", *HitComponent->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("Hit Component: %s"), *HitComponent->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("Other Actor: %s"), *OtherActor->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("Other Component: %s"), *OtherComponent->GetName());
 }
 
 // Called every frame
