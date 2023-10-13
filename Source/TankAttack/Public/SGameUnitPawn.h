@@ -17,6 +17,8 @@ public:
 	// Sets default values for this pawn's properties
 	ASGameUnitPawn();
 
+	void HandleDestruction(); // virtual???
+
 protected:
 
 	void RotateTurret(FVector LookAtTarget);

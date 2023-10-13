@@ -17,6 +17,12 @@ void ASTowerPawn::Tick(float DeltaSeconds)
 	
 }
 
+void ASTowerPawn::HandleDestruction()
+{
+	Super::HandleDestruction();
+	Destroy();
+}
+
 void ASTowerPawn::BeginPlay()
 {
 	Super::BeginPlay();

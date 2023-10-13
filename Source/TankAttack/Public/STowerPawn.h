@@ -18,6 +18,8 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	void HandleDestruction();
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -26,8 +28,8 @@ private:
 
 	class ASTankPawn* Tank;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
-	float FireRange = 700.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float FireRange = 1200.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float FireRate = 2.0f;

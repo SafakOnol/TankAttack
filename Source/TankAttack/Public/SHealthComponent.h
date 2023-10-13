@@ -7,6 +7,8 @@
 #include "SHealthComponent.generated.h"
 
 
+class ATankAttackGameMode;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKATTACK_API USHealthComponent : public UActorComponent
 {
@@ -27,6 +29,8 @@ private:
 
 	UFUNCTION()
 	void DamageTaken(AActor* DamagedActor, float DamageAmount, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
+
+	ATankAttackGameMode* TankAttackGameMode;
 
 public:	
 	// Called every frame

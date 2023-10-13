@@ -17,6 +17,13 @@ ASTankPawn::ASTankPawn()
 	CameraComponent->SetupAttachment(SpringArmComponent);
 }
 
+void ASTankPawn::HandleDestruction()
+{
+	Super::HandleDestruction();
+	SetActorHiddenInGame(true); // render the tank invisible, so we're still in game but tank is gone
+	SetActorTickEnabled(false); // stop tick function of the tank
+}
+
 // Called when the game starts or when spawned
 void ASTankPawn::BeginPlay()
 {
@@ -25,7 +32,7 @@ void ASTankPawn::BeginPlay()
 	
 	Super::BeginPlay();
 
-	PlayerControllerReference = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 	// Get Controller is actually a type APlayerController pointer stored in AController pointer,
 	// therefore we can Cast it back to APlayerController, which is our type of pointer (pointers have to reference to same types)
 }
@@ -35,11 +42,11 @@ void ASTankPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Using APlayerController::GetHitResultUnderCursor to line trace to mouse cursor and getting hit information
-	if(PlayerControllerReference)
+	if(TankPlayerController)
 	{
 		// We're passing the FHitResult as reference but not const, because we need to change the information on HitResult with every hit.
 		FHitResult HitResult;
-		PlayerControllerReference->GetHitResultUnderCursor(ECC_Visibility,false, HitResult);
+		TankPlayerController->GetHitResultUnderCursor(ECC_Visibility,false, HitResult);
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 12, FColor::Blue, false, -1.f);
 		RotateTurret(HitResult.ImpactPoint);
 	}

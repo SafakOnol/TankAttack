@@ -20,6 +20,10 @@ public:
 	// Sets default values for this pawn's properties
 	ASTankPawn();
 
+	void HandleDestruction();
+
+	APlayerController* GetPlayerController() const { return TankPlayerController; }
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -44,7 +48,10 @@ private:
 	float TurretTurnRate = 100.f;
 
 	UPROPERTY()
-	APlayerController* PlayerControllerReference;
+	APlayerController* TankPlayerController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float FireRate = 1.0f;
 	
 public:
 	

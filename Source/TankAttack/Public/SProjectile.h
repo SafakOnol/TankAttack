@@ -31,13 +31,16 @@ private:
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float ProjectileInitialSpeed = 1300.f;
+	float ProjectileInitialSpeed = 3000.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float ProjectileMaxSpeed = 2000.f;
+	float ProjectileMaxSpeed = 5000.f;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	UPROPERTY(EditAnywhere)
+	float DamageAmount = 50.f;
 	
 public:	
 	// Called every frame
