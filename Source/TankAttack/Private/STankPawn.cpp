@@ -47,7 +47,7 @@ void ASTankPawn::Tick(float DeltaTime)
 		// We're passing the FHitResult as reference but not const, because we need to change the information on HitResult with every hit.
 		FHitResult HitResult;
 		TankPlayerController->GetHitResultUnderCursor(ECC_Visibility,false, HitResult);
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 12, FColor::Blue, false, -1.f);
+		//DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 12, FColor::Blue, false, -1.f);
 		RotateTurret(HitResult.ImpactPoint);
 	}
 }
