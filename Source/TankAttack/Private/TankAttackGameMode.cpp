@@ -3,6 +3,7 @@
 
 #include "TankAttackGameMode.h"
 
+#include "STankAttackPlayerController.h"
 #include "STankPawn.h"
 #include "STowerPawn.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,10 +13,9 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 	if(KilledActor == Tank)
 	{
 		Tank->HandleDestruction();
-		if (Tank->GetPlayerController())
+		if (TankAttackPlayerController)
 		{
-			Tank->DisableInput(Tank->GetPlayerController());
-			Tank->GetPlayerController()->bShowMouseCursor = false;
+			TankAttackPlayerController->SetPlayerEnabledState(false);
 		}
 		
 	}
@@ -31,6 +31,7 @@ void ATankAttackGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	Tank = Cast<ASTankPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
+	TankAttackPlayerController = Cast<ASTankAttackPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
 	
 }

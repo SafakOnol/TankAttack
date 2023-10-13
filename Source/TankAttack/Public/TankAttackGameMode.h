@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "TankAttackGameMode.generated.h"
 
+class ASTankAttackPlayerController;
 class ASTankPawn;
 /**
  * 
@@ -26,5 +27,5 @@ protected:
 private:
 
 	ASTankPawn* Tank;
-	
+	ASTankAttackPlayerController* TankAttackPlayerController;
 };
