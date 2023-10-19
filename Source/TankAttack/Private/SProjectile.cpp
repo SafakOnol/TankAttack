@@ -37,7 +37,11 @@ void ASProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	// UE_LOG(LogTemp, Warning, TEXT("Other Actor: %s"), *OtherActor->GetName());
 	// UE_LOG(LogTemp, Warning, TEXT("Other Component: %s"), *OtherComponent->GetName());
 	auto MyOwner = GetOwner();
-	if(MyOwner == nullptr) return;
+	if(MyOwner == nullptr)
+	{
+		Destroy(); // in order to avoid a memory issue with particle system we destroy the object before it can spawn a particle
+		return;
+	}
 
 	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
 	auto DamageTypeClass = UDamageType::StaticClass();
@@ -45,9 +49,13 @@ void ASProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	if(OtherActor && OtherActor != this && OtherActor != MyOwner)
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, DamageAmount, MyOwnerInstigator, this, DamageTypeClass); // This boradcasts to OnDamageTaken
-		Destroy();
-	}
+		if(HitParticles)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation()); // spawn projectile
+		}
 	
+	}
+	Destroy();
 }
 
 // Called every frame

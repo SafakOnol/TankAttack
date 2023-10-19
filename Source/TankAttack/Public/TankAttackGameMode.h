@@ -37,8 +37,16 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
 	float EncounterCountdown = 20.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	int32 Seconds;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	int32 SecondsToDisplay;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	int32 Minutes;
 	
-	UFUNCTION()
+	
+	UFUNCTION(BlueprintCallable)
 	void ApplyCountdown(); 
 	
 private:
@@ -51,7 +59,7 @@ private:
 	
 	void HandleGameStart();
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
 	int32 TargetTowers = 0;
 	int32 GetTargetTowerCount();
 

@@ -26,6 +26,7 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 		KilledTower->HandleDestruction();
 		TargetTowers--;
 		EncounterCountdown += 7.f;
+		UE_LOG(LogTemp, Display, TEXT("Tower Destroyed!"));
 		if (TargetTowers == 0) // win condition
 		{
 			GameWon(true);
@@ -73,19 +74,20 @@ int32 ATankAttackGameMode::GetTargetTowerCount()
 
 void ATankAttackGameMode::ApplyCountdown()
 {
+	Seconds = ceil(EncounterCountdown);
+	SecondsToDisplay = Seconds % 60; // TODO: there should be a better way for this
+	Minutes = floor(Seconds/60);
+	
 	EncounterCountdown--;
-
-	int32 Seconds = ceil(EncounterCountdown);
-	int32 SecondsToDisplay = Seconds % 60; // TODO: there should be a better way for this
-	int32 Minutes = floor(Seconds/60);
 	
 	UE_LOG(LogTemp, Display, TEXT("Minutes: %d"), Minutes);
 	UE_LOG(LogTemp, Display,  TEXT("Seconds: %d"),SecondsToDisplay);
 
-	if ( Minutes == 0 && Seconds < 0)
+	if ( Minutes < 1 && Seconds < 1)
 	{
-		KillActor(Tank);
 		UE_LOG(LogTemp, Display, TEXT("Timeout!"));
+		EncounterCountdown = 0;
+		KillActor(Tank);
 	}
 	
 }
