@@ -8,6 +8,7 @@
 
 class UCapsuleComponent;
 class UParticleSystem;
+class USoundBase;
 
 UCLASS()
 class TANKATTACK_API ASGameUnitPawn : public APawn
@@ -46,4 +47,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	UParticleSystem* DeathParticle;
 
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* PawnDeathSound;
 };

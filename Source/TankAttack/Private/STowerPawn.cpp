@@ -43,7 +43,7 @@ void ASTowerPawn::CheckFireCondition()
 
 bool ASTowerPawn::IsTankInRange()
 {
-	if(Tank)
+	if(Tank && !Tank->IsHidden())
 	{
 		float Distance = FVector::Dist(GetActorLocation(), Tank->GetActorLocation());
 		if (Distance < FireRange)

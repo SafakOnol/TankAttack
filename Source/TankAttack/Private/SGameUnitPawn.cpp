@@ -30,6 +30,11 @@ void ASGameUnitPawn::HandleDestruction()
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation(), GetActorRotation());
 	}
+
+	if(PawnDeathSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, PawnDeathSound,GetActorLocation(), GetActorRotation());
+	}
 	
 }
 

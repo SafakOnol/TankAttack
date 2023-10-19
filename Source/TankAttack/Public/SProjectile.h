@@ -8,6 +8,7 @@
 
 
 class UProjectileMovementComponent;
+class USoundBase;
 
 UCLASS()
 class TANKATTACK_API ASProjectile : public AActor
@@ -47,6 +48,13 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	UParticleSystemComponent* TrailParticleSystemComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* LaunchProjectileSound;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* ProjectileHitSound;
+	
 	
 public:	
 	// Called every frame
