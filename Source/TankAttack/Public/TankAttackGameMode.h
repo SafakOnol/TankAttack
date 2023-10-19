@@ -29,6 +29,17 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameWon(bool bWonGame);
+
+
+	// COUNTDOWN TIMER
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	FTimerHandle EncounterCountdownTimerHandle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	float EncounterCountdown = 20.f;
+	
+	UFUNCTION()
+	void ApplyCountdown(); 
 	
 private:
 
@@ -37,7 +48,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
 	float StartDelay = 4.f;
-
+	
 	void HandleGameStart();
 
 	UPROPERTY()

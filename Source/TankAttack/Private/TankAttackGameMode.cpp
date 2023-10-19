@@ -7,6 +7,7 @@
 #include "STankPawn.h"
 #include "STowerPawn.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 void ATankAttackGameMode::KillActor(AActor* KilledActor)
 {
@@ -24,6 +25,7 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 	{
 		KilledTower->HandleDestruction();
 		TargetTowers--;
+		EncounterCountdown += 7.f;
 		if (TargetTowers == 0) // win condition
 		{
 			GameWon(true);
@@ -38,6 +40,7 @@ void ATankAttackGameMode::BeginPlay()
 	HandleGameStart();
 	
 }
+
 
 void ATankAttackGameMode::HandleGameStart()
 {
@@ -57,8 +60,7 @@ void ATankAttackGameMode::HandleGameStart()
 													&ASTankAttackPlayerController::SetPlayerEnabledState, true);
 
 		GetWorldTimerManager().SetTimer(PlayerEnableTimerHandle, PlayerEnableTimerDelegate, StartDelay, false);
-		
-		
+		GetWorldTimerManager().SetTimer(EncounterCountdownTimerHandle, this, &ATankAttackGameMode::ApplyCountdown, 1.f, true, StartDelay);
 	}
 }
 
@@ -67,4 +69,23 @@ int32 ATankAttackGameMode::GetTargetTowerCount()
 	TArray<AActor*> TowersOnMap; // declare an array
 	UGameplayStatics::GetAllActorsOfClass(this, ASTowerPawn::StaticClass(), TowersOnMap); // set the array to TowerPawn class
 	return TowersOnMap.Num(); // return the number
+}
+
+void ATankAttackGameMode::ApplyCountdown()
+{
+	EncounterCountdown--;
+
+	int32 Seconds = ceil(EncounterCountdown);
+	int32 SecondsToDisplay = Seconds % 60; // TODO: there should be a better way for this
+	int32 Minutes = floor(Seconds/60);
+	
+	UE_LOG(LogTemp, Display, TEXT("Minutes: %d"), Minutes);
+	UE_LOG(LogTemp, Display,  TEXT("Seconds: %d"),SecondsToDisplay);
+
+	if ( Minutes == 0 && Seconds < 0)
+	{
+		KillActor(Tank);
+		UE_LOG(LogTemp, Display, TEXT("Timeout!"));
+	}
+	
 }
