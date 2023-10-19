@@ -17,12 +17,17 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 		{
 			TankAttackPlayerController->SetPlayerEnabledState(false);
 		}
-		
+		GameWon(false); // lose condition
 	}
 
 	else if (ASTowerPawn* KilledTower = Cast<ASTowerPawn>(KilledActor))
 	{
 		KilledTower->HandleDestruction();
+		TargetTowers--;
+		if (TargetTowers == 0) // win condition
+		{
+			GameWon(true);
+		}
 	}
 }
 
@@ -36,6 +41,7 @@ void ATankAttackGameMode::BeginPlay()
 
 void ATankAttackGameMode::HandleGameStart()
 {
+	TargetTowers = GetTargetTowerCount(); // set the target tower int32 to current number of towers on map at the beginning.
 	Tank = Cast<ASTankPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
 	TankAttackPlayerController = Cast<ASTankAttackPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
@@ -54,4 +60,11 @@ void ATankAttackGameMode::HandleGameStart()
 		
 		
 	}
+}
+
+int32 ATankAttackGameMode::GetTargetTowerCount()
+{
+	TArray<AActor*> TowersOnMap; // declare an array
+	UGameplayStatics::GetAllActorsOfClass(this, ASTowerPawn::StaticClass(), TowersOnMap); // set the array to TowerPawn class
+	return TowersOnMap.Num(); // return the number
 }

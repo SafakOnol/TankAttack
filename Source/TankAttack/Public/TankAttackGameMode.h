@@ -27,12 +27,22 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartGame(); // Function implementation is in BP, don't need a body on cpp 
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void GameWon(bool bWonGame);
+	
 private:
 
 	ASTankPawn* Tank;
 	ASTankAttackPlayerController* TankAttackPlayerController;
 
-	float StartDelay = 3.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
+	float StartDelay = 4.f;
 
 	void HandleGameStart();
+
+	UPROPERTY()
+	int32 TargetTowers = 0;
+	int32 GetTargetTowerCount();
+
+	
 };
