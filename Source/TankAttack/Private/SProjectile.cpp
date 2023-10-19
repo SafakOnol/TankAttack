@@ -6,6 +6,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/DamageType.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ASProjectile::ASProjectile()
@@ -19,7 +20,9 @@ ASProjectile::ASProjectile()
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("Projectile Movement Component");
 	ProjectileMovementComponent->MaxSpeed = ProjectileMaxSpeed;
 	ProjectileMovementComponent->InitialSpeed = ProjectileInitialSpeed;
-	// Can't setup attachment?
+
+	TrailParticleSystemComponent = CreateDefaultSubobject<UParticleSystemComponent>("Trail Particle System Component");
+	TrailParticleSystemComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

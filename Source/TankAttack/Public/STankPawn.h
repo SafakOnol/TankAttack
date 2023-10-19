@@ -34,7 +34,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UCameraComponent* CameraComponent;
-
+	
 	void Move(float Value);
 	void Turn(float Value);
 

@@ -7,6 +7,7 @@
 #include "SGameUnitPawn.generated.h"
 
 class UCapsuleComponent;
+class UParticleSystem;
 
 UCLASS()
 class TANKATTACK_API ASGameUnitPawn : public APawn
@@ -40,6 +41,9 @@ private:
 	USceneComponent* ProjectileSpawnPoint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat");
-	TSubclassOf<class ASProjectile> ProjectileClass; // This allows us to access another class 
+	TSubclassOf<class ASProjectile> ProjectileClass; // This allows us to access another class
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	UParticleSystem* DeathParticle;
 
 };
