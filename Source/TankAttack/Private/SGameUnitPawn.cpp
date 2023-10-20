@@ -35,7 +35,11 @@ void ASGameUnitPawn::HandleDestruction()
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, PawnDeathSound,GetActorLocation(), GetActorRotation());
 	}
-	
+
+	if(DeathCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass, ShakeScale);
+	}
 }
 
 void ASGameUnitPawn::RotateTurret(FVector LookAtTarget)

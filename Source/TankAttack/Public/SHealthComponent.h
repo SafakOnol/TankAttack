@@ -29,7 +29,7 @@ private:
 
 	UFUNCTION()
 	void DamageTaken(AActor* DamagedActor, float DamageAmount, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
-
+	
 	ATankAttackGameMode* TankAttackGameMode;
 
 public:	

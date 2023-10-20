@@ -54,7 +54,14 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	USoundBase* ProjectileHitSound;
-	
+
+	class ASTankPawn* PlayerTank;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<UCameraShakeBase> HitCameraShakeClass;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float ProjectileShakeScale = 1.f;
 	
 public:	
 	// Called every frame

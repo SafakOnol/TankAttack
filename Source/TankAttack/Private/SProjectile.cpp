@@ -3,10 +3,12 @@
 
 #include "SProjectile.h"
 
+#include "STankPawn.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameFramework/DamageType.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Camera/CameraShakeBase.h"
 
 // Sets default values
 ASProjectile::ASProjectile()
@@ -35,6 +37,8 @@ void ASProjectile::BeginPlay()
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, LaunchProjectileSound, GetActorLocation());
 	}
+
+	PlayerTank = Cast<ASTankPawn>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
 
 void ASProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
@@ -64,7 +68,15 @@ void ASProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, ProjectileHitSound,GetActorLocation());
 		}
-	
+
+		if(OtherActor == PlayerTank && HitCameraShakeClass)
+		{
+			GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass, ProjectileShakeScale);
+		}
+		
+		//FString DamagedActor = OtherActor->GetName();
+		//UE_LOG(LogTemp, Display, TEXT("Damaged: %s"), *FString(DamagedActor));
+		
 	}
 	Destroy();
 }

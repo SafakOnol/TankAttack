@@ -9,7 +9,7 @@
 class UCapsuleComponent;
 class UParticleSystem;
 class USoundBase;
-
+class UCameraShakeBase;
 UCLASS()
 class TANKATTACK_API ASGameUnitPawn : public APawn
 {
@@ -49,4 +49,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	USoundBase* PawnDeathSound;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<UCameraShakeBase> DeathCameraShakeClass;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float ShakeScale = 1.f;
 };

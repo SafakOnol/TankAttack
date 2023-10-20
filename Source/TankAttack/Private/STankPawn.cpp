@@ -37,6 +37,15 @@ void ASTankPawn::BeginPlay()
 	// therefore we can Cast it back to APlayerController, which is our type of pointer (pointers have to reference to same types)
 }
 
+void ASTankPawn::Fire()
+{
+	Super::Fire();
+	if(HitCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
+	}
+}
+
 void ASTankPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -82,6 +91,7 @@ void ASTankPawn::Turn(float Value)
 	DeltaRotation.Yaw = Value * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
 	AddActorLocalRotation(DeltaRotation, true);
 }
+
 
 
 

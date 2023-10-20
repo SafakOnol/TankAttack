@@ -27,6 +27,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void Fire();
 	
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -37,6 +39,8 @@ private:
 	
 	void Move(float Value);
 	void Turn(float Value);
+
+	void TakeDamage();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float Speed = 500.f;
@@ -52,6 +56,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float FireRate = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<UCameraShakeBase> HitCameraShakeClass;
 	
 public:
 	

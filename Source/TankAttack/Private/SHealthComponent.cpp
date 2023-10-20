@@ -3,8 +3,11 @@
 
 #include "SHealthComponent.h"
 
+#include "STankAttackPlayerController.h"
+#include "STankPawn.h"
 #include "TankAttackGameMode.h"
 #include "Kismet/GameplayStatics.h"
+#include "UObject/UObjectBaseUtility.h"
 
 // Sets default values for this component's properties
 USHealthComponent::USHealthComponent()
@@ -44,6 +47,7 @@ void USHealthComponent::DamageTaken(AActor* DamagedActor, float DamageAmount, co
 	{
 		TankAttackGameMode->KillActor(DamagedActor);
 	}
+	
 }
 
 // Called every frame
