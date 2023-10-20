@@ -35,7 +35,12 @@ void ASTowerPawn::BeginPlay()
 
 void ASTowerPawn::CheckFireCondition()
 {
-	if(IsTankInRange())
+	if(Tank == nullptr)
+	{
+		return;
+	}
+	
+	if(IsTankInRange() && Tank->bAlive)
 	{
 		Fire();
 	}

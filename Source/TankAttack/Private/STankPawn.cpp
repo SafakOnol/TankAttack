@@ -22,6 +22,7 @@ void ASTankPawn::HandleDestruction()
 	Super::HandleDestruction();
 	SetActorHiddenInGame(true); // render the tank invisible, so we're still in game but tank is gone
 	SetActorTickEnabled(false); // stop tick function of the tank
+	bAlive = false;
 }
 
 // Called when the game starts or when spawned

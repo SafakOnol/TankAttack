@@ -11,7 +11,7 @@
 
 void ATankAttackGameMode::KillActor(AActor* KilledActor)
 {
-	if(KilledActor == Tank)
+	if(KilledActor == Tank && Tank->bAlive)
 	{
 		Tank->HandleDestruction();
 		if (TankAttackPlayerController)
@@ -19,6 +19,7 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 			TankAttackPlayerController->SetPlayerEnabledState(false);
 		}
 		GameWon(false); // lose condition
+		Tank->bAlive = false;
 	}
 
 	else if (ASTowerPawn* KilledTower = Cast<ASTowerPawn>(KilledActor))
@@ -88,6 +89,7 @@ void ATankAttackGameMode::ApplyCountdown()
 		UE_LOG(LogTemp, Display, TEXT("Timeout!"));
 		EncounterCountdown = 0;
 		KillActor(Tank);
+		
 	}
 	
 }

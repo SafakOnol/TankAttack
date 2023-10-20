@@ -59,7 +59,7 @@ void ASGameUnitPawn::Fire()
 	FVector ProjectileSpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
 	//DrawDebugSphere(GetWorld(), ProjectileSpawnPointLocation, 25.f, 12, FColor::Red, false, 3.f);
 	FRotator ProjectileRotation = ProjectileSpawnPoint->GetComponentRotation();
-	auto Projectile = GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, ProjectileSpawnPointLocation, ProjectileRotation);
+	ASProjectile* Projectile = GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, ProjectileSpawnPointLocation, ProjectileRotation);
 	Projectile->SetOwner(this); // store the projectile's owner to the actor that spawned it.
 }
 
