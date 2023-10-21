@@ -9,6 +9,14 @@
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 
+
+void ATankAttackGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	HandleGameStart();
+}
+
 void ATankAttackGameMode::KillActor(AActor* KilledActor)
 {
 	if(KilledActor == Tank && Tank->bAlive)
@@ -35,14 +43,10 @@ void ATankAttackGameMode::KillActor(AActor* KilledActor)
 	}
 }
 
-void ATankAttackGameMode::BeginPlay()
+void ATankAttackGameMode::HandleTargetDestroyed()
 {
-	Super::BeginPlay();
-
-	HandleGameStart();
-	
+	KillActor(this);
 }
-
 
 void ATankAttackGameMode::HandleGameStart()
 {
@@ -73,16 +77,25 @@ int32 ATankAttackGameMode::GetTargetTowerCount()
 	return TowersOnMap.Num(); // return the number
 }
 
+int32 ATankAttackGameMode::GetRemainingTime()
+{
+	return SecondsToDisplay;
+}
+
 void ATankAttackGameMode::ApplyCountdown()
 {
+	if(TargetTowers == 0)
+	{
+		return;
+	}
 	Seconds = ceil(EncounterCountdown);
 	SecondsToDisplay = Seconds % 60; // TODO: there should be a better way for this
 	Minutes = floor(Seconds/60);
 	
 	EncounterCountdown--;
 	
-	UE_LOG(LogTemp, Display, TEXT("Minutes: %d"), Minutes);
-	UE_LOG(LogTemp, Display,  TEXT("Seconds: %d"),SecondsToDisplay);
+	//UE_LOG(LogTemp, Display, TEXT("Minutes: %d"), Minutes);
+	//UE_LOG(LogTemp, Display,  TEXT("Seconds: %d"),SecondsToDisplay);
 
 	if ( Minutes < 1 && Seconds < 1)
 	{

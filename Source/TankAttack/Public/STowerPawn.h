@@ -9,6 +9,7 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTargetDestroyed);
 UCLASS()
 class TANKATTACK_API ASTowerPawn : public ASGameUnitPawn
 {

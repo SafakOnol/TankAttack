@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "TankAttackGameMode.generated.h"
 
+class ASTowerPawn;
 class ASTankAttackPlayerController;
 class ASTankPawn;
 /**
@@ -19,6 +20,9 @@ class TANKATTACK_API ATankAttackGameMode : public AGameModeBase
 public:
 
 	void KillActor(AActor* KilledActor);
+
+	UFUNCTION()
+	void HandleTargetDestroyed();
 
 protected:
 
@@ -61,7 +65,11 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Mode", meta = (AllowPrivateAccess = "true"))
 	int32 TargetTowers = 0;
+	
+public:
+	UFUNCTION(BlueprintCallable)
 	int32 GetTargetTowerCount();
 
-	
+	UFUNCTION(BlueprintCallable)
+	int32 GetRemainingTime();
 };
